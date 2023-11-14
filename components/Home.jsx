@@ -128,28 +128,33 @@ const Home = () => {
       </View>
 
       {/* Sección de Botones de Categoría */}
-      <View style={styles.categorySection}>
-        {getUniqueCategories().map((category) => (
-          <Pressable
-            key={category}
-            style={({ pressed }) => [
-              styles.categoryButton,
-              category === selectedCategory && styles.selectedCategoryButton,
-              pressed && styles.pressedCategoryButton,
-            ]}
-            onPress={() => handleCategoryPress(category)}
-          >
-            <Text
-              style={[
-                styles.categoryButtonText,
-                category === selectedCategory &&
-                  styles.selectedCategoryButtonText,
+      <View style={styles.category}>
+        <Text style={styles.categoryTitle}>
+          Seleccione su categoría preferida
+        </Text>
+        <View style={styles.categorySection}>
+          {getUniqueCategories().map((category) => (
+            <Pressable
+              key={category}
+              style={({ pressed }) => [
+                styles.categoryButton,
+                category === selectedCategory && styles.selectedCategoryButton,
+                pressed && styles.pressedCategoryButton,
               ]}
+              onPress={() => handleCategoryPress(category)}
             >
-              {category}
-            </Text>
-          </Pressable>
-        ))}
+              <Text
+                style={[
+                  styles.categoryButtonText,
+                  category === selectedCategory &&
+                    styles.selectedCategoryButtonText,
+                ]}
+              >
+                {category}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
       </View>
 
       {/* Lista de menú */}
@@ -196,7 +201,6 @@ const styles = StyleSheet.create({
   },
   titleSection: {
     backgroundColor: '#495E57',
-    marginBottom: 20,
     width: '100%',
     padding: 20, // Añade un relleno para mantener el espacio entre los bordes y el contenido
   },
@@ -251,6 +255,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 20,
   },
+  category: {
+    backgroundColor: '#FBDABB',
+    paddingVertical: 20,
+  },
+  categoryTitle: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+    color: '#495E57', // Color del texto del título
+    fontSize: 24,
+  },
   categoryButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -301,7 +317,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 25,
+    marginVertical: 25,
     textAlign: 'center',
   },
 })
