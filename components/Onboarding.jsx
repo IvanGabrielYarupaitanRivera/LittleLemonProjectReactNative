@@ -13,6 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { useUser } from '../UserContext'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Onboarding = () => {
   const [name, setName] = useState('')
@@ -29,6 +30,17 @@ const Onboarding = () => {
       Alert.alert('Registro no exitoso', 'Rellenar los datos')
       return
     }
+
+    // Guardar datos del usuario en AsyncStorage
+    try {
+      await AsyncStorage.setItem(
+        'userData',
+        JSON.stringify({ nombre: name, apellido: lastName, email })
+      )
+    } catch (error) {
+      console.error('Error al guardar los datos del usuario:', error)
+    }
+
     // Actualizar datos del usuario en el contexto
     setUserData({ nombre: name, apellido: lastName, email })
 

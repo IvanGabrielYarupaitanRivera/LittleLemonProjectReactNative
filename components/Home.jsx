@@ -9,10 +9,10 @@ import {
   StyleSheet,
   FlatList,
   TextInput,
+  ScrollView,
 } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { ScrollView } from 'react-native-gesture-handler'
 
 const Home = () => {
   // Obtener el objeto de navegación
@@ -78,7 +78,7 @@ const Home = () => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <Image
@@ -158,11 +158,12 @@ const Home = () => {
       </View>
 
       {/* Lista de menú */}
-      <Text style={styles.heading}>Menu</Text>
+      <Text style={styles.heading}>Menú</Text>
       <FlatList
         data={filteredMenuData}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderMenuItem}
+        style={styles.menuList}
       />
 
       {/* Agrega aquí el contenido adicional de tu página de inicio */}
@@ -173,10 +174,6 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 0,
-    backgroundColor: '#EDEFEE',
   },
   header: {
     flexDirection: 'row',
@@ -188,6 +185,9 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 50,
+  },
+  menuList: {
+    flex: 1, // Esto permite que la FlatList ocupe todo el espacio disponible
   },
   text: {
     fontSize: 20,
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#495E57',
     width: '100%',
     padding: 20, // Añade un relleno para mantener el espacio entre los bordes y el contenido
+    marginBottom: 0,
   },
   title: {
     fontSize: 30,

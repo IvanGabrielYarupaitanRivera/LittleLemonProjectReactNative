@@ -1,18 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useUser } from '../UserContext'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Profile = () => {
-  const { userData } = useUser()
+  const { userData, setUserData } = useUser()
   const navigation = useNavigation()
 
-  const handleLogout = () => {
-    // Lógica para cerrar sesión y borrar los datos
+  const handleLogout = async () => {
+    // Borrar datos del usuario en AsyncStorage
+    try {
+      await AsyncStorage.removeItem('userData')
+    } catch (error) {
+      console.error('Error al borrar los datos del usuario:', error)
+    }
+
+    // Borrar datos del usuario en el contexto
+    setUserData(null)
+
     // En este ejemplo, simplemente navegamos de nuevo a la pantalla de inicio
     navigation.navigate('Onboarding')
   }
+
+  // Recuperar datos del usuario al cargar la pantalla
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const storedUserData = await AsyncStorage.getItem('userData')
+        if (storedUserData) {
+          setUserData(JSON.parse(storedUserData))
+        }
+      } catch (error) {
+        console.error('Error al recuperar los datos del usuario:', error)
+      }
+    }
+
+    fetchUserData()
+  }, [setUserData])
 
   return (
     <View style={styles.container}>
